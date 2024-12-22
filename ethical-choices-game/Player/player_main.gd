@@ -5,7 +5,7 @@ const SPEED = 2
 const accel = 4 #accel amount / sec
 
 @onready var camera = $Camera3D
-
+var interactPrompt = preload("res://Testing/prompt.tscn")
 
 func _physics_process(delta):
 	

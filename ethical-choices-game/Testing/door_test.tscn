@@ -1,4 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://ccriegtril2ho"]
+[gd_scene load_steps=9 format=3 uid="uid://ccriegtril2ho"]
+
+[ext_resource type="Script" path="res://Testing/door_test.gd" id="1_yellh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oa1sw"]
 size = Vector3(2, 2.5, 0.25)
@@ -28,10 +30,22 @@ normal_texture = SubResource("NoiseTexture2D_5cm6u")
 material = SubResource("StandardMaterial3D_bjd1a")
 size = Vector3(2, 2.5, 0.25)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_5ldxd"]
+size = Vector3(2, 2.5, 3)
+
 [node name="Door_Test" type="AnimatableBody3D"]
+script = ExtResource("1_yellh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.25, 0)
 shape = SubResource("BoxShape3D_oa1sw")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.25, 0)
 mesh = SubResource("BoxMesh_vonn3")
+
+[node name="CollisionArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.25, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CollisionArea"]
+shape = SubResource("BoxShape3D_5ldxd")

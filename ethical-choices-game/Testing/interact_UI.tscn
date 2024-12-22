@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=3 uid="uid://balqject6fqke"]
+
+[ext_resource type="Theme" uid="uid://b6p4llw7pmq8k" path="res://Testing/interactionTheme.tres" id="1_2j6kg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ti45p"]
+font_size = 50
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 20
+shadow_color = Color(0.317647, 0.317647, 0.317647, 0.505882)
+shadow_offset = Vector2(8, 10)
+
+[node name="InteractPrompt" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_2j6kg")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Press \"E\" to"
+label_settings = SubResource("LabelSettings_ti45p")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Action" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_2j6kg")
+text = "Do some action."
+label_settings = SubResource("LabelSettings_ti45p")
+horizontal_alignment = 1
