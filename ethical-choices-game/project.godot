@@ -13,3 +13,22 @@ config_version=5
 config/name="Ethical choices game"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[input]
+
+walkL={
+"deadzone": 0.5,
+"events": []
+}
+walkR={
+"deadzone": 0.5,
+"events": []
+}
+walkF={
+"deadzone": 0.5,
+"events": []
+}
+walkB={
+"deadzone": 0.5,
+"events": []
+}
