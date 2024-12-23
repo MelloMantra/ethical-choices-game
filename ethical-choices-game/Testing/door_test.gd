@@ -3,7 +3,9 @@ extends AnimatableBody3D
 var player : CharacterBody3D
 var mainScene : Node3D
 @onready var collisionBox : Area3D = $CollisionArea
+var playerInBounds : bool = false
 
+@export var message : String = "to open door."
 
 var isOpen : bool = false
 
@@ -23,6 +25,16 @@ func tweenSelf(closing : bool = false):
 	else:
 		tween.tween_property(self, "global_rotation:y", startRotation, .75)
 	
+func _process(delta):
+	if collisionBox.get_overlapping_bodies().find(player) > -1:
+		if !playerInBounds:
+			playerInBounds = true
+			player.call("spawnPrompt", collisionBox.global_position, message, self)
+	else:
+		if playerInBounds:
+			playerInBounds = false
+			player.call("removePrompt", self)
+
 
 func _input(event):
 	print(collisionBox.get_overlapping_bodies().find(player))

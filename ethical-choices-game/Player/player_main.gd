@@ -1,11 +1,31 @@
 extends CharacterBody3D
 
 
-const SPEED = 2
-const accel = 4 #accel amount / sec
+const SPEED = 4
+const accel = 8 #accel amount / sec
 
 @onready var camera = $Camera3D
 var interactPrompt = preload("res://Testing/prompt.tscn")
+
+var currentPrompt : MeshInstance3D
+var currentObject
+
+func spawnPrompt(newPos : Vector3, newTxt : String, object = null):
+	if currentPrompt:
+		currentPrompt.queue_free()
+		currentPrompt = null
+	var newPrompt = interactPrompt.instantiate()
+	get_tree().get_root().get_child(0).add_child(newPrompt)
+	newPrompt.global_position = newPos
+	newPrompt.get_node("SubViewport/InteractPrompt/Panel/VBoxContainer/Action").text = newTxt
+	currentPrompt = newPrompt
+	currentObject = object
+
+func removePrompt(object):
+	if currentPrompt and object == currentObject:
+		currentPrompt.queue_free()
+		currentPrompt = null
+		currentObject = null
 
 func _physics_process(delta):
 	
