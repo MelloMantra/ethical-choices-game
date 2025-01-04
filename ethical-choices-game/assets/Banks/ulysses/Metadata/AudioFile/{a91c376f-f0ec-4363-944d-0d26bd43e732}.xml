@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{a91c376f-f0ec-4363-944d-0d26bd43e732}">
+		<property name="assetPath">
+			<value>Ulysses.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>36</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{0917a712-e356-4f16-ad09-aaafe24f9eed}</destination>
+		</relationship>
+	</object>
+</objects>
