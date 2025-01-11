@@ -5,7 +5,7 @@ var mainScene : Node3D
 @onready var collisionBox : Area3D = $CollisionArea
 var playerInBounds : bool = false
 
-@export var message : String = "to open door."
+@export var message : String = 'Press "E" to open door.'
 
 var isOpen : bool = false
 
@@ -29,7 +29,7 @@ func _process(delta):
 	if collisionBox.get_overlapping_bodies().find(player) > -1:
 		if !playerInBounds:
 			playerInBounds = true
-			player.call("spawnPrompt", collisionBox.global_position, message, self)
+			player.call("spawnPrompt", message, self)
 	else:
 		if playerInBounds:
 			playerInBounds = false

@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://d0wat0xqmswwr"]
+[gd_scene load_steps=5 format=3 uid="uid://d0wat0xqmswwr"]
 
 [ext_resource type="Script" path="res://Player/player_main.gd" id="1_xbnyu"]
+[ext_resource type="PackedScene" uid="uid://cjy0n02hdcrxe" path="res://Player/game_ui.tscn" id="2_r7cew"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_idewj"]
 
@@ -19,3 +20,10 @@ transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 5, 2)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_iqtlb")
+
+[node name="GameUI" parent="." instance=ExtResource("2_r7cew")]
+
+[node name="PromptPanel" parent="GameUI" index="0"]
+visible = false
+
+[editable path="GameUI"]

@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://bx7eoaew86r2s"]
+[gd_scene load_steps=8 format=3 uid="uid://bx7eoaew86r2s"]
 
+[ext_resource type="Texture2D" uid="uid://bp57ssspdivoy" path="res://icon.svg" id="1_abyuu"]
 [ext_resource type="PackedScene" uid="uid://d0wat0xqmswwr" path="res://Player/player_character.tscn" id="1_k3481"]
 [ext_resource type="PackedScene" uid="uid://ccriegtril2ho" path="res://Testing/door_test.tscn" id="2_bupty"]
 
@@ -16,6 +17,10 @@ sky = SubResource("Sky_v6wm0")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_faeal"]
+albedo_texture = ExtResource("1_abyuu")
+uv1_triplanar = true
+
 [node name="TestWorld" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -31,6 +36,7 @@ use_collision = true
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 size = Vector3(15, 1, 15)
+material = SubResource("StandardMaterial3D_faeal")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -7)
