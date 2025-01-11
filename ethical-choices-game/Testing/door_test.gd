@@ -12,7 +12,7 @@ var isOpen : bool = false
 var startRotation : float
 
 func _ready():
-	mainScene = get_tree().get_root().get_child(0)
+	mainScene = get_tree().get_root().get_child(1)
 	player = mainScene.find_child("Player")
 	startRotation = global_rotation.y
 
@@ -29,11 +29,11 @@ func _process(delta):
 	if collisionBox.get_overlapping_bodies().find(player) > -1:
 		if !playerInBounds:
 			playerInBounds = true
-			player.call("spawnPrompt", message, self)
+			BasicClassFunctions.spawnPrompt(message, self)
 	else:
 		if playerInBounds:
 			playerInBounds = false
-			player.call("removePrompt", self)
+			BasicClassFunctions.removePrompt(self)
 
 
 func _input(event):

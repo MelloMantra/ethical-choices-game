@@ -23,7 +23,4 @@ mesh = SubResource("CapsuleMesh_iqtlb")
 
 [node name="GameUI" parent="." instance=ExtResource("2_r7cew")]
 
-[node name="PromptPanel" parent="GameUI" index="0"]
-visible = false
-
 [editable path="GameUI"]
