@@ -11,7 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PromptPanel" type="PanelContainer" parent="."]
 clip_contents = true
 layout_mode = 1
 anchors_preset = 7
@@ -26,11 +26,11 @@ grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("1_71lko")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PromptPanel"]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="PanelContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="PromptPanel/HBoxContainer"]
 custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -40,8 +40,9 @@ text = "Press \"E\" "
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+clip_text = true
 
-[node name="TextureRect" type="TextureRect" parent="PanelContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="PromptPanel/HBoxContainer"]
 layout_mode = 2
 texture = ExtResource("2_d7odv")
 expand_mode = 2
