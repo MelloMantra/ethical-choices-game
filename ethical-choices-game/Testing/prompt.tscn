@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://bbngn2memkyt7"]
+
+[ext_resource type="PackedScene" uid="uid://balqject6fqke" path="res://Testing/interact_UI.tscn" id="1_xw5mw"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_hv7y3"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5lwey"]
+resource_local_to_scene = true
+transparency = 1
+no_depth_test = true
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_hv7y3")
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_mu8rt"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_5lwey")
+size = Vector2(4, 2)
+orientation = 2
+
+[node name="Prompt" type="MeshInstance3D"]
+mesh = SubResource("PlaneMesh_mu8rt")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(480, 270)
+
+[node name="InteractPrompt" parent="SubViewport" instance=ExtResource("1_xw5mw")]
+
+[editable path="SubViewport/InteractPrompt"]

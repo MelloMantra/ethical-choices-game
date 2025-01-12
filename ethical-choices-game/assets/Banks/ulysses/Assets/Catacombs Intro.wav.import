@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c1q8tnos0tyvr"
+path="res://.godot/imported/Catacombs Intro.wav-447a3e677afefd7de0c51b52c6eb54f8.sample"
+
+[deps]
+
+source_file="res://assets/Banks/ulysses/Assets/Catacombs Intro.wav"
+dest_files=["res://.godot/imported/Catacombs Intro.wav-447a3e677afefd7de0c51b52c6eb54f8.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
