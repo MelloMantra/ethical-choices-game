@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://jeu4t7fd0v5"]
+
+[ext_resource type="Script" path="res://Testing/test_pickup.gd" id="1_2ypgv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eusfq"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_j43fv"]
+
+[node name="TestPickup" type="StaticBody3D"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_2ypgv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_eusfq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_j43fv")

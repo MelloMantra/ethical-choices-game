@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://bb1af8fs8v30r"]
+
+[ext_resource type="Texture2D" uid="uid://dp6juer5li6h" path="res://Testing/AnimationSheet_Character.png" id="1_sec66"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_st1tg"]
+atlas = ExtResource("1_sec66")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jsgi5"]
+atlas = ExtResource("1_sec66")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y4nd6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_st1tg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jsgi5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="PlayerSprite" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(22, 22)
+sprite_frames = SubResource("SpriteFrames_y4nd6")
+
+[node name="Camera2D" type="Camera2D" parent="."]

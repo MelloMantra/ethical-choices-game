@@ -2,44 +2,48 @@ extends AnimatableBody3D
 
 var player : CharacterBody3D
 var mainScene : Node3D
-@onready var collisionBox : Area3D = $CollisionArea
+@onready var collisionBox1 : Area3D = $Enter1
+@onready var collisionBox2 = $Enter2
 var playerInBounds : bool = false
 
-@export var message : String = "to open door."
+@export var message : String = 'Press "E" to open door.'
+@export var direction : Vector2 = Vector2.UP
 
 var isOpen : bool = false
 
 var startRotation : float
 
 func _ready():
-	mainScene = get_tree().get_root().get_child(0)
+	mainScene = BasicClassFunctions.findChildOfClass(get_tree().get_root(), "Node3D").child
 	player = mainScene.find_child("Player")
 	startRotation = global_rotation.y
 
-func tweenSelf(closing : bool = false):
+func tweenSelf(opening : bool = false):
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_BOUNCE)
-	if !closing:
+	if opening:
 		tween.tween_property(self, "global_rotation:y", startRotation + PI/2, .75)
 	else:
-		tween.tween_property(self, "global_rotation:y", startRotation, .75)
+		tween.tween_property(self, "global_rotation:y", startRotation - PI/2, .75)
 	
 func _process(delta):
-	if collisionBox.get_overlapping_bodies().find(player) > -1:
+	if collisionBox1.get_overlapping_bodies().find(player) > -1 or collisionBox2.get_overlapping_bodies().find(player) > -1:
 		if !playerInBounds:
 			playerInBounds = true
-			player.call("spawnPrompt", collisionBox.global_position, message, self)
+			BasicClassFunctions.spawnPrompt(message, self)
 	else:
 		if playerInBounds:
 			playerInBounds = false
-			player.call("removePrompt", self)
+			BasicClassFunctions.removePrompt(self)
 
 
 func _input(event):
-	print(collisionBox.get_overlapping_bodies().find(player))
-	if Input.is_action_just_pressed("interact") and collisionBox.get_overlapping_bodies().find(player) > -1:
+	#print(collisionBox.get_overlapping_bodies().find(player))
+	if Input.is_action_just_pressed("interact") and collisionBox2.get_overlapping_bodies().find(player) > -1:
 		
-		tweenSelf(!isOpen)
-		isOpen = !isOpen
-		
+		tweenSelf(true)
+		mainScene.call("swap_rooms", false, self, direction)
+	elif Input.is_action_just_pressed("interact") and collisionBox1.get_overlapping_bodies().find(player) > -1:
+		tweenSelf(false)
+		mainScene.call("swap_rooms", true, self, direction)
