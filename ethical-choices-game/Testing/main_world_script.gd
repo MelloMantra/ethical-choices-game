@@ -15,6 +15,7 @@ func swap_rooms(isReverse : bool, door : AnimatableBody3D, direction : Vector2):
 	player.currentPlayerState = player.playerStates.TRANSITION
 	await get_tree().create_timer(.1).timeout
 	player.velocity = (doorPos- player.global_position)/player.roomTransitionLength
+	player.get_node("SpriteTest").no_depth_test = false
 	print(player.velocity)
 	player.set_collision_mask_value(3, false)
 	await player.transitionComplete
@@ -29,4 +30,5 @@ func swap_rooms(isReverse : bool, door : AnimatableBody3D, direction : Vector2):
 	await tween.tween_property(camera, "global_position", get_node(cameraMarkers[currentRoom.x][currentRoom.y]).global_position, .75).finished
 	player.currentPlayerState = player.playerStates.NORMAL
 	player.set_collision_mask_value(3, true)
+	player.get_node("SpriteTest").no_depth_test = true
 	BasicClassFunctions.playerData.CurrentRoom = currentRoom

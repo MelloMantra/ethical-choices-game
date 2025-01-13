@@ -18,6 +18,7 @@ var playerData = {
 
 
 func dispText(text : String, label : Label, panel : PanelContainer):
+	
 	var string = ""
 	label.text = string
 	stopText = false
@@ -67,3 +68,11 @@ func findChildOfClass(object : Node, classType : String):
 		if childList[i].is_class(classType):
 			return {index = i, child = childList[i]}
 			
+func findItemOfName(searchName : String, list:Array):
+	
+	
+	for i in list.size():
+		print(i)
+		if list[i].name == searchName:
+			return {index = i, child = list[i]}
+	return {index = -1, child = null}
