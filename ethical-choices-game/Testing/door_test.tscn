@@ -36,6 +36,7 @@ size = Vector3(2, 2.5, 1.5)
 [node name="Door_Test" type="AnimatableBody3D"]
 collision_layer = 4
 collision_mask = 9
+input_ray_pickable = false
 script = ExtResource("1_yellh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

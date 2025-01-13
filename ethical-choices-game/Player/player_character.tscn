@@ -186,6 +186,7 @@ animations = [{
 
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 14
+input_ray_pickable = false
 script = ExtResource("1_xbnyu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -210,6 +211,7 @@ frame = 4
 
 [node name="AttackCollider" type="Area3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, 0)
+input_ray_pickable = false
 
 [node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="AttackCollider"]
 polygon = PackedVector2Array(0.3, -0.5, 1, -0.2, 1, 0.2, 0.3, 0.5)

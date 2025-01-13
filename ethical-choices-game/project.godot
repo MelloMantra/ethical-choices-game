@@ -20,9 +20,7 @@ BasicClassFunctions="*res://Testing/basic _class_functions.gd"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
-window/size/mode=2
+window/size/mode=1
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_height"
 
@@ -70,6 +68,7 @@ basic_attack={
 3d_physics/layer_2="World"
 3d_physics/layer_3="Doors"
 3d_physics/layer_4="Enemies"
+3d_physics/layer_5="Items"
 
 [rendering]
 

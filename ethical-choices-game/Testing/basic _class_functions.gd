@@ -37,7 +37,7 @@ func dispText(text : String, label : Label, panel : PanelContainer):
 func spawnPrompt(newTxt : String, object = null,
 	promptBox : Label = get_node("/root/TestWorld/Player/GameUI/PromptPanel/HBoxContainer/Label"),
 	promptPanel : PanelContainer = get_node("/root/TestWorld/Player/GameUI/PromptPanel")):
-	
+	promptBox.text = ""
 	if !textDebounce or object != currentObject:
 		promptPanel.visible = true
 		stopText = true
@@ -73,6 +73,6 @@ func findItemOfName(searchName : String, list:Array):
 	
 	for i in list.size():
 		print(i)
-		if list[i].name == searchName:
+		if list[i].is_class("Node") and list[i].name == searchName:
 			return {index = i, child = list[i]}
 	return {index = -1, child = null}

@@ -36,8 +36,8 @@ size = Vector3(2, 2.5, 1.5)
 [node name="Locked_Door_Test" type="AnimatableBody3D"]
 collision_layer = 4
 collision_mask = 9
+input_ray_pickable = false
 script = ExtResource("1_a24ba")
-message = "Press \"E\" to open door."
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.25, 0)

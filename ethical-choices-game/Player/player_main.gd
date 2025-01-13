@@ -40,7 +40,7 @@ func _physics_process(delta):
 		move_and_slide()
 		return
 	
-	print(velocity)
+	
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("walkL", "walkR", "walkF", "walkB")

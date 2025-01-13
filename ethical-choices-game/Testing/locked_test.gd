@@ -13,7 +13,7 @@ var playerInBounds : bool = false
 var isOpen : bool = false
 
 var isLocked : bool = true
-var keyUnlockName : String = "Default Key"
+@export var keyUnlockName : String = "Default Key"
 
 var startRotation : float
 
@@ -54,8 +54,9 @@ func _input(event):
 		elif Input.is_action_just_pressed("interact") and collisionBox1.get_overlapping_bodies().find(player) > -1:
 			tweenSelf(false)
 			mainScene.call("swap_rooms", true, self, direction)
-	elif BasicClassFunctions.findItemOfName(keyUnlockName, BasicClassFunctions.playerData.CurrentItems).index > -1:
-		isLocked = true
-		BasicClassFunctions.removePrompt(self)
-		await get_tree().create_timer(.1).timeout
-		BasicClassFunctions.spawnPrompt(message2, self)
+	elif BasicClassFunctions.playerData.CurrentItems.find(keyUnlockName) > -1:#BasicClassFunctions.findItemOfName(keyUnlockName, BasicClassFunctions.playerData.CurrentItems).index > -1:
+		if Input.is_action_just_pressed("interact") and (collisionBox2.get_overlapping_bodies().find(player) > -1 or collisionBox1.get_overlapping_bodies().find(player) > -1): 
+			isLocked = false
+			BasicClassFunctions.removePrompt(self)
+			await get_tree().create_timer(.1).timeout
+			BasicClassFunctions.spawnPrompt(message2, self)
