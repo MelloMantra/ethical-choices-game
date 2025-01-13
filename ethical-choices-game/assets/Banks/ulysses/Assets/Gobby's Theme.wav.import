@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://blhak537mxm2w"
+path="res://.godot/imported/Gobby's Theme.wav-24f344fada52507968c4b9911fd47d66.sample"
+
+[deps]
+
+source_file="res://assets/Banks/ulysses/Assets/Gobby's Theme.wav"
+dest_files=["res://.godot/imported/Gobby's Theme.wav-24f344fada52507968c4b9911fd47d66.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

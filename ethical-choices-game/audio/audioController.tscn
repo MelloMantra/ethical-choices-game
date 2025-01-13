@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8xae1rqv6121"]
+
+[ext_resource type="Script" path="res://addons/fmod/tool/ui/FmodBankExplorer.gd" id="1_8o3ct"]
+
+[node name="AudioController" type="Node3D"]
+
+[node name="FmodBankLoader" type="FmodBankLoader" parent="."]
+
+[node name="FmodBankExplorer" type="Window" parent="."]
+size = Vector2i(960, 508)
+script = ExtResource("1_8o3ct")

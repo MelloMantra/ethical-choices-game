@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{7df72777-f723-4373-bfa2-9485634987a3}">
+		<property name="assetPath">
+			<value>Gobby's Theme.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>64.5</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{0917a712-e356-4f16-ad09-aaafe24f9eed}</destination>
+		</relationship>
+	</object>
+</objects>

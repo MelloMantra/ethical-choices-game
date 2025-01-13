@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://cp1oxlipsl0a6"]
+
+[ext_resource type="Script" path="res://skeleton/skeleton.gd" id="1_1tebp"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2yu62"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_3nwwc"]
+
+[node name="Skeleton" type="CharacterBody3D"]
+script = ExtResource("1_1tebp")
+walkSpeed = null
+aggroSpeed = null
+
+[node name="pivot" type="Node3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_2yu62")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+aabb = AABB(-0.553036, -0.97952, -0.510342, 1.10607, 1.95904, 1.02068)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_3nwwc")
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_entered"]

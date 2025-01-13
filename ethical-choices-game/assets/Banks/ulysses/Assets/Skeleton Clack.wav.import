@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cylh4ocrql242"
+path="res://.godot/imported/Skeleton Clack.wav-b9d1d5c7c21678e74c14cf6dcc4ccd1c.sample"
+
+[deps]
+
+source_file="res://assets/Banks/ulysses/Assets/Skeleton Clack.wav"
+dest_files=["res://.godot/imported/Skeleton Clack.wav-b9d1d5c7c21678e74c14cf6dcc4ccd1c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
