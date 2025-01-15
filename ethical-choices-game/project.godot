@@ -35,15 +35,14 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-
 BasicClassFunctions="*res://Testing/basic _class_functions.gd"
-
 FmodManager="*res://addons/fmod/FmodManager.gd"
-
 
 [display]
 
-window/size/mode=1
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_height"
 

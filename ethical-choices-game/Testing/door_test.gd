@@ -13,19 +13,25 @@ var isOpen : bool = false
 
 var startRotation : float
 
+var debounce : bool = false
+
 func _ready():
 	mainScene = BasicClassFunctions.findChildOfClass(get_tree().get_root(), "Node3D").child
 	player = mainScene.find_child("Player")
 	startRotation = global_rotation.y
 
 func tweenSelf(opening : bool = false):
-	var tween = create_tween()
-	tween.set_ease(Tween.EASE_OUT)
-	tween.set_trans(Tween.TRANS_BOUNCE)
-	if opening:
-		tween.tween_property(self, "global_rotation:y", startRotation + PI/2, .75)
-	else:
-		tween.tween_property(self, "global_rotation:y", startRotation - PI/2, .75)
+	if !debounce:
+		debounce = true
+		var tween = create_tween()
+		tween.set_ease(Tween.EASE_OUT)
+		tween.set_trans(Tween.TRANS_BOUNCE)
+		if opening:
+			tween.tween_property(self, "global_rotation:y", startRotation + PI/2, .75)
+		else:
+			tween.tween_property(self, "global_rotation:y", startRotation - PI/2, .75)
+		await tween.finished
+		debounce = false
 	
 func _process(delta):
 	if collisionBox1.get_overlapping_bodies().find(player) > -1 or collisionBox2.get_overlapping_bodies().find(player) > -1:
@@ -40,10 +46,11 @@ func _process(delta):
 
 func _input(event):
 	#print(collisionBox.get_overlapping_bodies().find(player))
-	if Input.is_action_just_pressed("interact") and collisionBox2.get_overlapping_bodies().find(player) > -1:
-		
-		tweenSelf(true)
-		mainScene.call("swap_rooms", false, self, direction)
-	elif Input.is_action_just_pressed("interact") and collisionBox1.get_overlapping_bodies().find(player) > -1:
-		tweenSelf(false)
-		mainScene.call("swap_rooms", true, self, direction)
+	if !debounce:
+		if Input.is_action_just_pressed("interact") and collisionBox2.get_overlapping_bodies().find(player) > -1:
+			
+			tweenSelf(true)
+			mainScene.call("swap_rooms", false, self, direction)
+		elif Input.is_action_just_pressed("interact") and collisionBox1.get_overlapping_bodies().find(player) > -1:
+			tweenSelf(false)
+			mainScene.call("swap_rooms", true, self, direction)

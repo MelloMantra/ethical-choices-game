@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bx7eoaew86r2s"]
+[gd_scene load_steps=12 format=3 uid="uid://bx7eoaew86r2s"]
 
 [ext_resource type="Script" path="res://Testing/main_world_script.gd" id="1_8xlbb"]
 [ext_resource type="Texture2D" uid="uid://bp57ssspdivoy" path="res://icon.svg" id="1_abyuu"]
@@ -27,6 +27,10 @@ volumetric_fog_albedo = Color(0.344076, 0.344076, 0.344076, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_faeal"]
 albedo_texture = ExtResource("1_abyuu")
 uv1_triplanar = true
+
+[sub_resource type="FogMaterial" id="FogMaterial_4at0x"]
+density = 2.5
+albedo = Color(0, 0, 0, 1)
 
 [node name="TestWorld" type="Node3D"]
 script = ExtResource("1_8xlbb")
@@ -137,6 +141,34 @@ shadow_enabled = true
 omni_range = 8.0
 omni_shadow_mode = 0
 
+[node name="OmniLight3D17" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+light_energy = 2.0
+shadow_enabled = true
+omni_range = 8.0
+omni_shadow_mode = 0
+
+[node name="OmniLight3D18" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 3, 0)
+light_energy = 2.0
+shadow_enabled = true
+omni_range = 8.0
+omni_shadow_mode = 0
+
+[node name="OmniLight3D19" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 3, -14)
+light_energy = 2.0
+shadow_enabled = true
+omni_range = 8.0
+omni_shadow_mode = 0
+
+[node name="OmniLight3D20" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 3, -14)
+light_energy = 2.0
+shadow_enabled = true
+omni_range = 8.0
+omni_shadow_mode = 0
+
 [node name="OmniLight3D5" type="OmniLight3D" parent="Lights"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 3, 6)
 light_energy = 2.0
@@ -241,3 +273,25 @@ direction = Vector2(-1, 0)
 
 [node name="TestPickup" parent="." instance=ExtResource("6_0u3d5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19, 0.5, -5)
+
+[node name="FogNodes" type="Node3D" parent="."]
+
+[node name="FogVolume1" type="FogVolume" parent="FogNodes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+size = Vector3(14, 5, 14)
+material = SubResource("FogMaterial_4at0x")
+
+[node name="FogVolume2" type="FogVolume" parent="FogNodes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.5, 0)
+size = Vector3(14, 5, 14)
+material = SubResource("FogMaterial_4at0x")
+
+[node name="FogVolume3" type="FogVolume" parent="FogNodes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 1.5, -14)
+size = Vector3(14, 5, 14)
+material = SubResource("FogMaterial_4at0x")
+
+[node name="FogVolume4" type="FogVolume" parent="FogNodes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -14)
+size = Vector3(14, 5, 14)
+material = SubResource("FogMaterial_4at0x")
