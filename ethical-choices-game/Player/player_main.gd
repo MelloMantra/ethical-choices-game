@@ -6,6 +6,8 @@ const accel = 8 #accel amount / sec
 
 @onready var camera = $Camera3D
 @onready var sprite : AnimatedSprite3D = $SpriteTest
+@onready var slash : AnimatedSprite3D = $AttackCollider/TestSlash
+@onready var attackArea : Area3D = $AttackCollider
 
 @onready var promptBox : Label = $GameUI/PromptPanel/HBoxContainer/Label
 @onready var promptPanel : PanelContainer = $GameUI/PromptPanel
@@ -26,6 +28,7 @@ func _ready():
 	print(promptPanel.size.y)
 	sprite.play("Idle")
 
+var zDepth
 
 func _physics_process(delta):
 	
@@ -39,7 +42,9 @@ func _physics_process(delta):
 				transitionTime = 0.0
 		move_and_slide()
 		return
-	
+	if $Camera3D/DistanceRay.is_colliding():
+		zDepth = $Camera3D/DistanceRay.get_collision_point()
+		zDepth = zDepth.distance_to(camera.global_position)
 	
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -57,10 +62,16 @@ func _physics_process(delta):
 	if Input.is_action_pressed("sprint"):
 		velocity *= Vector3(1.5,1,1.5)
 	
+	
+	
 	if currentPlayerState == playerStates.NORMAL:
 		if velocity.length() != 0:
 			if velocity.x != 0:
 				sprite.flip_h = velocity.x < 0
+			if velocity.z > 0:
+				slash.render_priority = 4
+			else:
+				slash.render_priority = 1
 			if velocity.length() <= SPEED:
 				sprite.play("Walk")
 			else:
@@ -78,6 +89,13 @@ func _physics_process(delta):
 func _input(event):
 	if Input.is_action_just_pressed("basic_attack") and currentPlayerState == playerStates.NORMAL:
 		currentPlayerState = playerStates.ATTACKING
-		sprite.play("attack")
-		await sprite.animation_finished
+		slash.play("slash")
+		for hit in attackArea.get_overlapping_bodies():
+			if hit.has_method("takeDamage"):
+				hit.call("takeDamage", 15)
+		await slash.animation_finished
 		currentPlayerState = playerStates.NORMAL
+	elif event is InputEventMouseMotion and zDepth:
+		var lookPoint : Vector3 = camera.project_position(event.position, zDepth)
+		lookPoint.y = attackArea.global_position.y
+		attackArea.look_at(lookPoint)

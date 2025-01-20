@@ -15,7 +15,29 @@ var playerData = {
 	CurrentItems = [],
 	CurrentAllianceAmount = 0
 }
+var scene_to_load : String = "res://Testing/test_world.tscn"
 
+func save_data():
+	var saveDict : Dictionary = {
+		pData = playerData,
+		currentScene = get_tree().edited_scene_root.scene_file_path,
+		currentLoadedChildren = get_tree().edited_scene_root.get_children()
+	}
+	var file : FileAccess = FileAccess.open("user://UlyssesSavedData", FileAccess.WRITE)
+	file.store_string(JSON.stringify(saveDict))
+	file.close()
+var loadDict:Dictionary = {}
+func load_data():
+	loadDict = JSON.parse_string(FileAccess.open("user://UlyssesSavedData", FileAccess.READ).get_as_text())
+	scene_to_load = loadDict.currentScene
+	get_tree().change_scene_to_file("res://Testing/load_screen.tscn")
+
+func _check_scene_contents():
+	var mainScene = findChildOfClass(get_tree().get_root(), "Node3D")
+	var childArray : Array = mainScene.get_children()
+	for index in childArray.size():
+		if !loadDict.currentLoadedChildren.find(childArray[index]):
+			childArray[index].queue_free()
 
 func dispText(text : String, label : Label, panel : PanelContainer):
 	

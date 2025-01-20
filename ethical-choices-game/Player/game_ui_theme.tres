@@ -1,9 +1,22 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://c5fahnnlm81a7"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://c5fahnnlm81a7"]
 
 [ext_resource type="FontFile" uid="uid://c5enf46rgade5" path="res://Testing/Pixeled.ttf" id="1_m7doo"]
+[ext_resource type="StyleBox" uid="uid://c11c5qqyui06b" path="res://Testing/Theme_Elements/baseStyleBox.tres" id="2_hof60"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ttujs"]
-bg_color = Color(0.192157, 0.192157, 0.192157, 0.8)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b6b52"]
+bg_color = Color(0.400698, 0.400698, 0.400698, 0.8)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aynan"]
+bg_color = Color(0.724643, 0.724643, 0.724643, 0.8)
 border_width_left = 10
 border_width_top = 10
 border_width_right = 10
@@ -16,7 +29,13 @@ corner_radius_bottom_left = 5
 
 [resource]
 default_font_size = 15
+Button/font_sizes/font_size = 35
+Button/fonts/font = ExtResource("1_m7doo")
+Button/styles/hover = SubResource("StyleBoxFlat_b6b52")
+Button/styles/normal = ExtResource("2_hof60")
+Button/styles/pressed = SubResource("StyleBoxFlat_aynan")
 Label/constants/line_spacing = -20
 Label/font_sizes/font_size = 15
 Label/fonts/font = ExtResource("1_m7doo")
-PanelContainer/styles/panel = SubResource("StyleBoxFlat_ttujs")
+PanelContainer/styles/panel = ExtResource("2_hof60")
+VBoxContainer/constants/separation = 100

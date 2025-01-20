@@ -1,9 +1,13 @@
 extends Node3D
 
 @onready var player = $Player
-@onready var camera = $Camera3D
+@onready var camera = $Player/Camera3D
 
 @export var cameraMarkers : Array[Array] = [[],[]]
+
+func _ready():
+	#BasicClassFunctions._check_scene_contents()
+	camera.global_position = get_node(cameraMarkers[0][0]).global_position
 
 func swap_rooms(isReverse : bool, door : AnimatableBody3D, direction : Vector2):
 	var currentRoom = BasicClassFunctions.playerData.CurrentRoom
