@@ -10,7 +10,7 @@ extends CharacterBody3D
 @onready var player : CharacterBody3D = mainScene.get_node("Player")
 
 var isVisible : bool = false
-const SPEED : float = 3.0
+const SPEED : float = 2.0
 
 var isControlled : bool = false
 

@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://dt2as1l8rpn23"]
+
+[ext_resource type="Script" path="res://skeleton/skellybones.gd" id="1_2kjig"]
+[ext_resource type="Texture2D" uid="uid://bp57ssspdivoy" path="res://icon.svg" id="2_vkwne"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dwarc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ycmps"]
+radius = 0.65
+
+[node name="skellybones" type="CharacterBody3D"]
+collision_layer = 8
+collision_mask = 7
+script = ExtResource("1_2kjig")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_dwarc")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.25)
+billboard = 1
+shaded = true
+no_depth_test = true
+texture_filter = 4
+texture = ExtResource("2_vkwne")
+
+[node name="HitArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitArea"]
+shape = SubResource("CapsuleShape3D_ycmps")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+aabb = AABB(-0.5, -1, -0.5, 1, 2, 1)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+debug_enabled = true
+
+[connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_exited"]
