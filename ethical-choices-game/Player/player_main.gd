@@ -101,7 +101,6 @@ func _physics_process(delta):
 func _input(event):
 	
 	if Input.is_action_just_pressed("basic_attack") and currentPlayerState == playerStates.NORMAL:
-		swap_bodies()
 		currentPlayerState = playerStates.ATTACKING
 		slash.play("slash")
 		for hit in attackArea.get_overlapping_bodies():

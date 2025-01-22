@@ -1,16 +1,11 @@
 extends CharacterBody3D
 
-@export var currentRoom : Vector2 = Vector2.ZERO
-@export var enemyHealth : float = 30.0
-@export var knockbackFrames: int = 30
-
-@onready var navAgent : NavigationAgent3D = $NavigationAgent3D
-@onready var hitArea : Area3D = $HitArea
 @onready var mainScene : Node3D = BasicClassFunctions.findChildOfClass(get_tree().get_root(), "Node3D").child
 @onready var player : CharacterBody3D = mainScene.get_node("Player")
+@onready var navAgent : NavigationAgent3D = $NavigationAgent3D
 
 var isVisible : bool = false
-const SPEED : float = 2.0
+const SPEED : float = 4.0
 
 func _on_visible_on_screen_notifier_3d_screen_entered():
 	isVisible = true
@@ -21,7 +16,16 @@ var playerPos : Vector3 = Vector3.ZERO
 var isKnockback : bool = false
 var currentKnockbackFrames : int = 0
 
+@export var currentRoom : Vector2 = Vector2.ZERO
+@export var enemyHealth : float = 30.0
+@export var knockbackFrames: int = 30
+@export var attackRadius : float = 5.0
+@export var attackFrequency : float = 6.0 # seconds
+@export var timeSinceShot : float = 0.0
+@export var state = "useable" # can also be "flying" or "timeout"
+
 var currentHealth := enemyHealth
+
 
 func _physics_process(delta):
 	if playerPos.distance_to(player.global_position) > .5:
@@ -41,7 +45,15 @@ func _physics_process(delta):
 				currentKnockbackFrames = 0
 			currentKnockbackFrames += 1
 			direction = global_position - player.global_position
-		direction = direction.normalized()
+		if (global_position - player.global_position).length()<attackRadius:
+			direction = Vector3.ZERO
+			velocity = Vector3.ZERO
+			timeSinceShot += delta
+			if timeSinceShot>=attackFrequency:
+				attack()
+				timeSinceShot = 0
+		else:
+			direction = direction.normalized()
 		
 		if direction:
 			velocity.x = direction.x * SPEED
@@ -55,6 +67,9 @@ func takeDamage(damage : float):
 		queue_free()
 
 
-func _on_hit_area_body_entered(body):
-	if body == player:
-		player.takeDamage(10.0, global_position)
+func attack():
+	var boneProj = load("res://skeleton/bone.tscn")
+	boneProj = boneProj.instantiate()
+	mainScene.add_child(boneProj)
+	boneProj.global_position = global_position + Vector3(0,0.5,0)
+	boneProj.direction = (player.global_position - boneProj.global_position).normalized()
