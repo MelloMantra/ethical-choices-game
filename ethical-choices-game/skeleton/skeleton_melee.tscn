@@ -15,6 +15,7 @@ input_ray_pickable = false
 script = ExtResource("1_m040p")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("CapsuleShape3D_dwarc")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
@@ -26,6 +27,7 @@ texture_filter = 4
 texture = ExtResource("1_fiu55")
 
 [node name="HitArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 collision_layer = 8
 input_ray_pickable = false
 
@@ -33,6 +35,7 @@ input_ray_pickable = false
 shape = SubResource("CapsuleShape3D_ycmps")
 
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 aabb = AABB(-0.5, -1, -0.5, 1, 2, 1)
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]

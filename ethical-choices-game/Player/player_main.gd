@@ -42,7 +42,7 @@ func _ready():
 	currentBody = self
 	await BasicClassFunctions.setPlayerBody
 	print(currentBody)
-	currentBody.global_position = BasicClassFunctions.playerData.LastEnteredPos + Vector3(0, currentBody.get_node("CollisionShape3D").shape.height/2, 0)
+	currentBody.global_position = BasicClassFunctions.playerData.LastEnteredPos
 	if currentBody != self:
 		currentBody.isControlled = true
 		global_position.y -= 10
