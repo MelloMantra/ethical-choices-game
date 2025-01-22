@@ -6,11 +6,13 @@ func _ready():
 
 
 func gameQuit():
-	get_tree().quit()
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
 
 func resumeGame():
 	get_tree().paused = false
 	visible = false
+	BasicClassFunctions.save_data()
 
 func _input(event):
 	if Input.is_action_just_pressed("pause"):

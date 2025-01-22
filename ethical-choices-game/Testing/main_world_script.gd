@@ -6,8 +6,10 @@ extends Node3D
 @export var cameraMarkers : Array[Array] = [[],[]]
 
 func _ready():
-	#BasicClassFunctions._check_scene_contents()
-	camera.global_position = get_node(cameraMarkers[0][0]).global_position
+	BasicClassFunctions._check_scene_contents()
+	var currentRoom = BasicClassFunctions.playerData.CurrentRoom
+	camera.global_position = get_node(cameraMarkers[currentRoom.x][currentRoom.y]).global_position
+	get_node(cameraMarkers[currentRoom.x][currentRoom.y]).get_node("FogVolume").material.density = 0
 
 func swap_rooms(isReverse : bool, door : AnimatableBody3D, direction : Vector2):
 	var currentRoom = BasicClassFunctions.playerData.CurrentRoom
@@ -20,7 +22,7 @@ func swap_rooms(isReverse : bool, door : AnimatableBody3D, direction : Vector2):
 	await get_tree().create_timer(.1).timeout
 	player.velocity = (doorPos- player.global_position)/player.roomTransitionLength
 	player.get_node("SpriteTest").no_depth_test = false
-	
+	BasicClassFunctions.playerData.LastEnteredPos = doorPos
 	player.set_collision_mask_value(3, false)
 	await player.transitionComplete
 	player.velocity = Vector3.ZERO

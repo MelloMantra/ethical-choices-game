@@ -4,6 +4,8 @@ extends CharacterBody3D
 const SPEED = 4
 const accel = 8 #accel amount / sec
 
+var currentHealth : float = 100.0
+
 @onready var camera = $Camera3D
 @onready var sprite : AnimatedSprite3D = $SpriteTest
 @onready var slash : AnimatedSprite3D = $AttackCollider/TestSlash
@@ -27,6 +29,10 @@ func _ready():
 	BasicClassFunctions.defaultPromptSize = promptPanel.size.y
 	print(promptPanel.size.y)
 	sprite.play("Idle")
+	currentHealth = BasicClassFunctions.playerData.CurrentHealth
+	$GameUI/Health.value = currentHealth
+	global_position = BasicClassFunctions.playerData.LastEnteredPos
+	BasicClassFunctions.save_data()
 
 var zDepth
 
@@ -40,6 +46,9 @@ func _physics_process(delta):
 			if transitionTime >= roomTransitionLength:
 				emit_signal("transitionComplete")
 				transitionTime = 0.0
+		else:
+			emit_signal("transitionComplete")
+			transitionTime = 0.0
 		move_and_slide()
 		return
 	if $Camera3D/DistanceRay.is_colliding():
@@ -99,3 +108,25 @@ func _input(event):
 		var lookPoint : Vector3 = camera.project_position(event.position, zDepth)
 		lookPoint.y = attackArea.global_position.y
 		attackArea.look_at(lookPoint)
+
+func takeDamage(damage : float, pos : Vector3):
+	currentHealth -= damage
+	BasicClassFunctions.playerData.CurrentHealth = currentHealth
+	var temp = roomTransitionLength
+	roomTransitionLength = .5
+	currentPlayerState = playerStates.TRANSITION
+	velocity = (global_position - pos).normalized() * SPEED
+	sprite.play("Knockback")
+	
+	await transitionComplete
+	create_tween().tween_property($GameUI/Health, "value", currentHealth, .5)
+	roomTransitionLength = temp
+	currentPlayerState = playerStates.NORMAL
+	if currentHealth <= 0:
+		
+		BasicClassFunctions.load_data()
+
+
+func _on_attack_collider_body_entered(body):
+	if currentPlayerState == playerStates.ATTACKING and body.has_method("takeDamage"):
+		body.call("takeDamage", 15)

@@ -3,6 +3,7 @@ var scene_to_load : String = ""
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
 	scene_to_load = BasicClassFunctions.scene_to_load
 	ResourceLoader.load_threaded_request(scene_to_load)
 

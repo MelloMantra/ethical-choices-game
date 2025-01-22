@@ -53,3 +53,8 @@ func takeDamage(damage : float):
 	currentHealth -= damage
 	if currentHealth <= 0:
 		queue_free()
+
+
+func _on_hit_area_body_entered(body):
+	if body == player:
+		player.takeDamage(10.0, global_position)

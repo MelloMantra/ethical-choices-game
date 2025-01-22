@@ -17,6 +17,7 @@ script = ExtResource("1_m040p")
 shape = SubResource("CapsuleShape3D_dwarc")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.25)
 billboard = 1
 shaded = true
 no_depth_test = true
@@ -24,6 +25,7 @@ texture_filter = 4
 texture = ExtResource("1_fiu55")
 
 [node name="HitArea" type="Area3D" parent="."]
+collision_layer = 8
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="HitArea"]
 shape = SubResource("CapsuleShape3D_ycmps")
@@ -34,5 +36,6 @@ aabb = AABB(-0.5, -1, -0.5, 1, 2, 1)
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 debug_enabled = true
 
+[connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier3D" to="." method="_on_visible_on_screen_notifier_3d_screen_exited"]

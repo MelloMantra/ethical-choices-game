@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://d0wat0xqmswwr"]
+[gd_scene load_steps=45 format=3 uid="uid://d0wat0xqmswwr"]
 
 [ext_resource type="Script" path="res://Player/player_main.gd" id="1_xbnyu"]
 [ext_resource type="PackedScene" uid="uid://cjy0n02hdcrxe" path="res://Player/game_ui.tscn" id="2_r7cew"]
@@ -16,6 +16,38 @@ region = Rect2(0, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_t7fq4"]
 atlas = ExtResource("3_x6la5")
 region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uday1"]
+atlas = ExtResource("3_x6la5")
+region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m01l2"]
+atlas = ExtResource("3_x6la5")
+region = Rect2(32, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hf6gr"]
+atlas = ExtResource("3_x6la5")
+region = Rect2(64, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rhgg"]
+atlas = ExtResource("3_x6la5")
+region = Rect2(96, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0782f"]
+atlas = ExtResource("3_x6la5")
+region = Rect2(128, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mfeji"]
+atlas = ExtResource("3_x6la5")
+region = Rect2(160, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ikqdo"]
+atlas = ExtResource("3_x6la5")
+region = Rect2(192, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ax7f"]
+atlas = ExtResource("3_x6la5")
+region = Rect2(224, 160, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dwcxr"]
 atlas = ExtResource("3_x6la5")
@@ -109,6 +141,35 @@ animations = [{
 "loop": true,
 "name": &"Idle",
 "speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uday1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m01l2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hf6gr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rhgg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0782f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mfeji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ikqdo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ax7f")
+}],
+"loop": false,
+"name": &"Knockback",
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -267,8 +328,9 @@ no_depth_test = true
 texture_filter = 2
 render_priority = 2
 sprite_frames = SubResource("SpriteFrames_pndnk")
-animation = &"attack"
-frame = 4
+animation = &"Knockback"
+frame = 7
+frame_progress = 1.0
 
 [node name="AttackCollider" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -278,7 +340,7 @@ input_ray_pickable = false
 [node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="AttackCollider"]
 transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, 0, 0, -0.125)
 depth = 0.1
-polygon = PackedVector2Array(0.3, -0.5, 1, -0.2, 1, 0.2, 0.3, 0.5)
+polygon = PackedVector2Array(0.3, -0.65, 1.25, -0.2, 1.25, 0.2, 0.3, 0.65)
 
 [node name="TestSlash" type="AnimatedSprite3D" parent="AttackCollider"]
 transform = Transform3D(-4.37114e-08, 1, 1.31134e-07, 1.42109e-14, 1.31134e-07, -1, -1, -4.37114e-08, -1.99429e-14, 0, 0, -0.875)
@@ -292,6 +354,8 @@ frame_progress = 1.0
 
 [node name="PauseMenu" parent="." instance=ExtResource("4_yc51g")]
 visible = false
+
+[connection signal="body_entered" from="AttackCollider" to="." method="_on_attack_collider_body_entered"]
 
 [editable path="GameUI"]
 [editable path="PauseMenu"]

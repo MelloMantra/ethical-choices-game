@@ -34,5 +34,6 @@ func _process(delta):
 func _input(event):
 	if Input.is_action_just_pressed("interact") and mouseHover:
 		BasicClassFunctions.playerData.CurrentItems.append(visible_name)
+		
 		BasicClassFunctions.removePrompt(self)
 		queue_free()
