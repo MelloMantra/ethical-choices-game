@@ -90,8 +90,9 @@ func _check_scene_contents():
 					var player = findItemOfName("Player", childArray).child
 					player.currentBody = mainScene.get_node(loadDict.pData.CurrentBodyNodePath)
 					print(player.currentBody)
+					continue
 					
-					setPlayerBody.emit()
+		setPlayerBody.emit()
 					
 					
 		

@@ -1,6 +1,4 @@
-
 [gd_scene load_steps=19 format=3 uid="uid://bx7eoaew86r2s"]
-
 
 [ext_resource type="Script" path="res://Testing/main_world_script.gd" id="1_8xlbb"]
 [ext_resource type="PackedScene" uid="uid://d0wat0xqmswwr" path="res://Player/player_character.tscn" id="1_k3481"]
@@ -8,28 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://ckj2njnfo5pao" path="res://Testing/locked_door_test.tscn" id="5_uhp4p"]
 [ext_resource type="PackedScene" uid="uid://jeu4t7fd0v5" path="res://Testing/test_pickup.tscn" id="6_0u3d5"]
 [ext_resource type="PackedScene" uid="uid://bkmcqoxxa01l3" path="res://skeleton/skeleton_melee.tscn" id="7_l2w3r"]
-
-[ext_resource type="MeshLibrary" uid="uid://0277m1w5on8x" path="res://Testing/meshLibrary.tres" id="8_yvjr1"]
-
 [ext_resource type="PackedScene" uid="uid://dt2as1l8rpn23" path="res://skeleton/skellybones.tscn" id="8_fxbu0"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lfcqd"]
-sky_top_color = Color(0, 0, 0, 1)
-sky_horizon_color = Color(0, 0, 0, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_v6wm0"]
-sky_material = SubResource("ProceduralSkyMaterial_lfcqd")
-
-[sub_resource type="Environment" id="Environment_no2nk"]
-background_mode = 2
-sky = SubResource("Sky_v6wm0")
-tonemap_mode = 2
-glow_enabled = true
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.0711
-volumetric_fog_albedo = Color(0.344076, 0.344076, 0.344076, 1)
-
+[ext_resource type="MeshLibrary" uid="uid://0277m1w5on8x" path="res://Testing/meshLibrary.tres" id="8_yvjr1"]
+[ext_resource type="AudioStream" uid="uid://cerijmnglm0el" path="res://assets/Banks/ulysses/Assets/Catacombs.wav" id="9_51cra"]
 
 [sub_resource type="FogMaterial" id="FogMaterial_8abv7"]
 density = 2.5
@@ -306,6 +285,15 @@ shape = SubResource("BoxShape3D_u6gke")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_no2nk")
+
 [node name="skellybones" parent="." instance=ExtResource("8_fxbu0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -17.7938)
 currentRoom = Vector2(0, 1)
+
+[node name="skellybones2" parent="." instance=ExtResource("8_fxbu0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -12)
+currentRoom = Vector2(0, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_51cra")
+autoplay = true

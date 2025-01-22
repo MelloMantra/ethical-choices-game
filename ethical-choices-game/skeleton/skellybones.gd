@@ -45,7 +45,7 @@ func _physics_process(delta):
 				currentKnockbackFrames = 0
 			currentKnockbackFrames += 1
 			direction = global_position - player.global_position
-		if (global_position - player.global_position).length()<attackRadius:
+		if (global_position - player.global_position).length()<attackRadius and !isKnockback:
 			direction = Vector3.ZERO
 			velocity = Vector3.ZERO
 			timeSinceShot += delta
