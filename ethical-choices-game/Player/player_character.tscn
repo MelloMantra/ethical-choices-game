@@ -1,8 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://d0wat0xqmswwr"]
+[gd_scene load_steps=46 format=3 uid="uid://d0wat0xqmswwr"]
 
 [ext_resource type="Script" path="res://Player/player_main.gd" id="1_xbnyu"]
 [ext_resource type="PackedScene" uid="uid://cjy0n02hdcrxe" path="res://Player/game_ui.tscn" id="2_r7cew"]
 [ext_resource type="Texture2D" uid="uid://dp6juer5li6h" path="res://Testing/AnimationSheet_Character.png" id="3_x6la5"]
+[ext_resource type="Texture2D" uid="uid://x11a4wx0rf7p" path="res://Imported/spriteSheets/sprite-sheet.png" id="4_iwfra"]
+[ext_resource type="PackedScene" uid="uid://0uvpmgust886" path="res://Player/pause_menu.tscn" id="4_yc51g"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_idewj"]
 height = 1.8
@@ -14,6 +16,38 @@ region = Rect2(0, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_t7fq4"]
 atlas = ExtResource("3_x6la5")
 region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uday1"]
+atlas = ExtResource("3_x6la5")
+region = Rect2(0, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m01l2"]
+atlas = ExtResource("3_x6la5")
+region = Rect2(32, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hf6gr"]
+atlas = ExtResource("3_x6la5")
+region = Rect2(64, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rhgg"]
+atlas = ExtResource("3_x6la5")
+region = Rect2(96, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0782f"]
+atlas = ExtResource("3_x6la5")
+region = Rect2(128, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mfeji"]
+atlas = ExtResource("3_x6la5")
+region = Rect2(160, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ikqdo"]
+atlas = ExtResource("3_x6la5")
+region = Rect2(192, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ax7f"]
+atlas = ExtResource("3_x6la5")
+region = Rect2(224, 160, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dwcxr"]
 atlas = ExtResource("3_x6la5")
@@ -110,6 +144,35 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_uday1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m01l2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hf6gr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rhgg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0782f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mfeji")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ikqdo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ax7f")
+}],
+"loop": false,
+"name": &"Knockback",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_dwcxr")
 }, {
 "duration": 1.0,
@@ -184,6 +247,60 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_8bay4"]
+atlas = ExtResource("4_iwfra")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_06cww"]
+atlas = ExtResource("4_iwfra")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uimth"]
+atlas = ExtResource("4_iwfra")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_imfr7"]
+atlas = ExtResource("4_iwfra")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n51ee"]
+atlas = ExtResource("4_iwfra")
+region = Rect2(384, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nio50"]
+atlas = ExtResource("4_iwfra")
+region = Rect2(512, 128, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pnm2a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8bay4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_06cww")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uimth")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_imfr7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n51ee")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nio50")
+}],
+"loop": false,
+"name": &"slash",
+"speed": 15.0
+}]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_iudyg"]
+height = 1.8
+radius = 2.5
+
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 14
 input_ray_pickable = false
@@ -195,6 +312,14 @@ shape = SubResource("CapsuleShape3D_idewj")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 5, 2)
+top_level = true
+current = true
+
+[node name="DistanceRay" type="RayCast3D" parent="Camera3D"]
+target_position = Vector3(0, 0, -15)
+collision_mask = 32
+collide_with_areas = true
+collide_with_bodies = false
 
 [node name="GameUI" parent="." instance=ExtResource("2_r7cew")]
 
@@ -205,15 +330,44 @@ billboard = 1
 shaded = true
 no_depth_test = true
 texture_filter = 2
+render_priority = 2
 sprite_frames = SubResource("SpriteFrames_pndnk")
-animation = &"attack"
-frame = 4
+animation = &"Knockback"
+frame = 7
+frame_progress = 1.0
 
 [node name="AttackCollider" type="Area3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_mask = 8
 input_ray_pickable = false
 
 [node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="AttackCollider"]
-polygon = PackedVector2Array(0.3, -0.5, 1, -0.2, 1, 0.2, 0.3, 0.5)
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, 0, 0, -0.125)
+depth = 0.1
+polygon = PackedVector2Array(0.3, -0.65, 1.25, -0.2, 1.25, 0.2, 0.3, 0.65)
+
+[node name="TestSlash" type="AnimatedSprite3D" parent="AttackCollider"]
+transform = Transform3D(-4.37114e-08, 1, 1.31134e-07, 1.42109e-14, 1.31134e-07, -1, -1, -4.37114e-08, -1.99429e-14, 0, 0, -0.875)
+pixel_size = 0.02
+no_depth_test = true
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_pnm2a")
+animation = &"slash"
+frame = 5
+frame_progress = 1.0
+
+[node name="PauseMenu" parent="." instance=ExtResource("4_yc51g")]
+visible = false
+
+[node name="CaptureCollider" type="Area3D" parent="."]
+collision_mask = 8
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CaptureCollider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CylinderShape3D_iudyg")
+
+[connection signal="body_entered" from="AttackCollider" to="." method="_on_attack_collider_body_entered"]
 
 [editable path="GameUI"]
+[editable path="PauseMenu"]

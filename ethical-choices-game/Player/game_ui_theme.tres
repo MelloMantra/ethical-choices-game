@@ -1,9 +1,10 @@
-[gd_resource type="Theme" load_steps=3 format=3 uid="uid://c5fahnnlm81a7"]
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://c5fahnnlm81a7"]
 
 [ext_resource type="FontFile" uid="uid://c5enf46rgade5" path="res://Testing/Pixeled.ttf" id="1_m7doo"]
+[ext_resource type="StyleBox" uid="uid://c11c5qqyui06b" path="res://Testing/Theme_Elements/baseStyleBox.tres" id="2_hof60"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ttujs"]
-bg_color = Color(0.192157, 0.192157, 0.192157, 0.8)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b6b52"]
+bg_color = Color(0.400698, 0.400698, 0.400698, 0.8)
 border_width_left = 10
 border_width_top = 10
 border_width_right = 10
@@ -14,9 +15,45 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aynan"]
+bg_color = Color(0.724643, 0.724643, 0.724643, 0.8)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qlcod"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_114om"]
+bg_color = Color(0.859323, 0, 0.254885, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+
 [resource]
 default_font_size = 15
+Button/font_sizes/font_size = 35
+Button/fonts/font = ExtResource("1_m7doo")
+Button/styles/hover = SubResource("StyleBoxFlat_b6b52")
+Button/styles/normal = ExtResource("2_hof60")
+Button/styles/pressed = SubResource("StyleBoxFlat_aynan")
+HBoxContainer/constants/separation = 50
 Label/constants/line_spacing = -20
 Label/font_sizes/font_size = 15
 Label/fonts/font = ExtResource("1_m7doo")
-PanelContainer/styles/panel = SubResource("StyleBoxFlat_ttujs")
+PanelContainer/styles/panel = ExtResource("2_hof60")
+ProgressBar/constants/outline_size = 5
+ProgressBar/styles/background = SubResource("StyleBoxFlat_qlcod")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_114om")
+VBoxContainer/constants/separation = 100

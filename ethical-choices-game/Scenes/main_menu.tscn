@@ -1,0 +1,91 @@
+[gd_scene load_steps=4 format=3 uid="uid://is7xlbfgobfc"]
+
+[ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_lp6dw"]
+[ext_resource type="Theme" uid="uid://c5fahnnlm81a7" path="res://Player/game_ui_theme.tres" id="1_pnph1"]
+[ext_resource type="AudioStream" uid="uid://dbaol717181cr" path="res://assets/Banks/ulysses/Assets/Ulysses.wav" id="3_yqh1a"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_lp6dw")
+
+[node name="GameName" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 270.0
+grow_horizontal = 2
+theme = ExtResource("1_pnph1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 35
+theme_override_font_sizes/font_size = 96
+text = "Ulysses"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SmallPrint" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 127.205
+offset_bottom = 397.205
+grow_horizontal = 2
+theme = ExtResource("1_pnph1")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 35
+theme_override_font_sizes/font_size = 26
+text = "An odyssey under the earth."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_bottom = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_pnph1")
+
+[node name="NewGame" type="Button" parent="Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_pnph1")
+theme_override_colors/font_color = Color(1.34766e-06, 0.675257, 0.140947, 1)
+text = "New Game"
+
+[node name="Load" type="Button" parent="Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_pnph1")
+theme_override_colors/font_color = Color(4.90934e-06, 0.603814, 0.830417, 1)
+text = "Load Game"
+
+[node name="Options" type="Button" parent="Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_pnph1")
+text = "Options"
+
+[node name="Quit" type="Button" parent="Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_pnph1")
+theme_override_colors/font_color = Color(0.82596, 0, 0.232837, 1)
+text = "Quit"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_yqh1a")
+autoplay = true
+
+[connection signal="pressed" from="Buttons/NewGame" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Buttons/Load" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="Buttons/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Buttons/Quit" to="." method="_on_quit_pressed"]

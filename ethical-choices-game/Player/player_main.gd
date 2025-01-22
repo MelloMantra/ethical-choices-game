@@ -4,11 +4,20 @@ extends CharacterBody3D
 const SPEED = 4
 const accel = 8 #accel amount / sec
 
+var currentHealth : float = 100.0
+
+var currentBody : CharacterBody3D
+
+@onready var mainScene : Node3D = BasicClassFunctions.findChildOfClass(get_tree().get_root(), "Node3D").child
+
 @onready var camera = $Camera3D
 @onready var sprite : AnimatedSprite3D = $SpriteTest
+@onready var slash : AnimatedSprite3D = $AttackCollider/TestSlash
+@onready var attackArea : Area3D = $AttackCollider
 
 @onready var promptBox : Label = $GameUI/PromptPanel/HBoxContainer/Label
 @onready var promptPanel : PanelContainer = $GameUI/PromptPanel
+@onready var fader = $GameUI/Fader
 
 enum playerStates {
 	NORMAL,
@@ -25,21 +34,41 @@ func _ready():
 	BasicClassFunctions.defaultPromptSize = promptPanel.size.y
 	print(promptPanel.size.y)
 	sprite.play("Idle")
+	currentHealth = BasicClassFunctions.playerData.CurrentHealth
+	$GameUI/Health.value = currentHealth
+	
+	
+	
+	currentBody = self
+	await BasicClassFunctions.setPlayerBody
+	print(currentBody)
+	currentBody.global_position = BasicClassFunctions.playerData.LastEnteredPos
+	if currentBody != self:
+		currentBody.isControlled = true
+		global_position.y -= 10
+		visible = false
+	
 
+var zDepth
 
 func _physics_process(delta):
 	
 	if currentPlayerState == playerStates.TRANSITION:
 		
-		if velocity.length() > 0:
+		if currentBody.velocity.length() > 0:
 			transitionTime += delta
 			
 			if transitionTime >= roomTransitionLength:
 				emit_signal("transitionComplete")
 				transitionTime = 0.0
-		move_and_slide()
+		else:
+			emit_signal("transitionComplete")
+			transitionTime = 0.0
+		currentBody.move_and_slide()
 		return
-	
+	if $Camera3D/DistanceRay.is_colliding():
+		zDepth = $Camera3D/DistanceRay.get_collision_point()
+		zDepth = zDepth.distance_to(camera.global_position)
 	
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -49,35 +78,89 @@ func _physics_process(delta):
 	camDirection.basis.y = Vector3.UP
 	var direction = (camDirection.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction and currentPlayerState != playerStates.TRANSITION:
-		velocity.x = min(abs(direction.x * SPEED), abs(velocity.x + direction.x * accel * delta)) * sign(direction.x)
-		velocity.z = min(abs(direction.z * SPEED), abs(velocity.z + direction.z * accel * delta)) * sign(direction.z)
+		currentBody.velocity.x = min(abs(direction.x * currentBody.SPEED), abs(currentBody.velocity.x + direction.x * accel * delta)) * sign(direction.x)
+		currentBody.velocity.z = min(abs(direction.z * currentBody.SPEED), abs(currentBody.velocity.z + direction.z * accel * delta)) * sign(direction.z)
 	elif currentPlayerState != playerStates.TRANSITION:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		currentBody.velocity.x = move_toward(currentBody.velocity.x, 0, SPEED)
+		currentBody.velocity.z = move_toward(currentBody.velocity.z, 0, SPEED)
 	if Input.is_action_pressed("sprint"):
-		velocity *= Vector3(1.5,1,1.5)
+		currentBody.velocity *= Vector3(1.5,1,1.5)
+	
+	
 	
 	if currentPlayerState == playerStates.NORMAL:
-		if velocity.length() != 0:
+		if currentBody.velocity.length() != 0:
 			if velocity.x != 0:
 				sprite.flip_h = velocity.x < 0
-			if velocity.length() <= SPEED:
+			if currentBody.velocity.z > 0:
+				slash.render_priority = 4
+			else:
+				slash.render_priority = 1
+			if currentBody.velocity.length() <= SPEED:
 				sprite.play("Walk")
 			else:
 				sprite.play("Sprint")
 		else:
 			sprite.play("Idle")
 	elif currentPlayerState != playerStates.TRANSITION:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		currentBody.velocity.x = move_toward(currentBody.velocity.x, 0, SPEED)
+		currentBody.velocity.z = move_toward(currentBody.velocity.z, 0, SPEED)
 		
 
-	move_and_slide()
+	currentBody.move_and_slide()
 
 
 func _input(event):
+	
 	if Input.is_action_just_pressed("basic_attack") and currentPlayerState == playerStates.NORMAL:
 		currentPlayerState = playerStates.ATTACKING
-		sprite.play("attack")
-		await sprite.animation_finished
+		slash.play("slash")
+		for hit in attackArea.get_overlapping_bodies():
+			if hit.has_method("takeDamage") and hit != currentBody:
+				hit.call("takeDamage", 15)
+		await slash.animation_finished
 		currentPlayerState = playerStates.NORMAL
+	elif event is InputEventMouseMotion and zDepth:
+		var lookPoint : Vector3 = camera.project_position(event.position, zDepth)
+		lookPoint.y = attackArea.global_position.y
+		attackArea.look_at(lookPoint)
+	elif Input.is_action_just_pressed("swapBodies") and currentPlayerState == playerStates.NORMAL:
+		swap_bodies()
+
+func takeDamage(damage : float, pos : Vector3):
+	currentHealth -= damage
+	BasicClassFunctions.playerData.CurrentHealth = currentHealth
+	var temp = roomTransitionLength
+	roomTransitionLength = .5
+	currentPlayerState = playerStates.TRANSITION
+	velocity = (global_position - pos).normalized() * SPEED
+	sprite.play("Knockback")
+	
+	await transitionComplete
+	create_tween().tween_property($GameUI/Health, "value", currentHealth, .5)
+	roomTransitionLength = temp
+	currentPlayerState = playerStates.NORMAL
+	if currentHealth <= 0:
+		
+		BasicClassFunctions.load_data()
+
+func swap_bodies():
+	if BasicClassFunctions.findItemOfClass($CaptureCollider.get_overlapping_bodies(), "CharacterBody3D").index > -1:
+		var tween : Tween = create_tween()
+		await tween.tween_property(fader["theme_override_styles/panel"], "bg_color", Color("000000"), .25).finished
+		visible = false
+		global_position.y -= 10
+	
+		currentBody = BasicClassFunctions.findItemOfClass($CaptureCollider.get_overlapping_bodies(), "CharacterBody3D").child
+		
+		currentBody.isControlled = true
+		BasicClassFunctions.playerData.CurrentBodyType = currentBody.bodyType
+		BasicClassFunctions.playerData.CurrentBodyNodePath = mainScene.get_path_to(currentBody)
+		print(BasicClassFunctions.playerData.CurrentBodyNodePath)
+		tween = create_tween()
+		tween.tween_property(fader["theme_override_styles/panel"], "bg_color", Color("000000", 0), .25)
+
+
+func _on_attack_collider_body_entered(body):
+	if currentPlayerState == playerStates.ATTACKING and body.has_method("takeDamage"):
+		body.call("takeDamage", 15)

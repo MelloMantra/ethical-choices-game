@@ -1,0 +1,70 @@
+[gd_scene load_steps=7 format=3 uid="uid://fh82ockamt2m"]
+
+[ext_resource type="FontFile" uid="uid://c5enf46rgade5" path="res://Testing/Pixeled.ttf" id="1_iqfo8"]
+[ext_resource type="Script" path="res://Testing/load_screen.gd" id="1_slwp4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_appo4"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_vnf0i"]
+font = ExtResource("1_iqfo8")
+font_size = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rjf2q"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ij3b6"]
+bg_color = Color(0.783523, 0.783523, 0.783523, 1)
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+
+[node name="LoadScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_slwp4")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_appo4")
+
+[node name="Label" type="Label" parent="."]
+texture_filter = 3
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -380.0
+offset_top = -140.0
+offset_right = 380.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Loading..."
+label_settings = SubResource("LabelSettings_vnf0i")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="Label"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -27.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_rjf2q")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ij3b6")
+max_value = 1.0
+show_percentage = false
