@@ -17,16 +17,16 @@ func swap_rooms(isReverse : bool, door : AnimatableBody3D, direction : Vector2):
 	if isReverse:
 		doorPos = door.get_node("Enter2").global_position
 		direction *= -1
-	doorPos.y = player.global_position.y
+	doorPos.y = player.currentBody.global_position.y
 	player.currentPlayerState = player.playerStates.TRANSITION
 	await get_tree().create_timer(.1).timeout
-	player.velocity = (doorPos- player.global_position)/player.roomTransitionLength
+	player.currentBody.velocity = (doorPos- player.currentBody.global_position)/player.roomTransitionLength
 	player.get_node("SpriteTest").no_depth_test = false
 	BasicClassFunctions.playerData.LastEnteredPos = doorPos
-	player.set_collision_mask_value(3, false)
+	player.currentBody.set_collision_mask_value(3, false)
 	await player.transitionComplete
-	player.velocity = Vector3.ZERO
-	player.global_position = doorPos
+	player.currentBody.velocity = Vector3.ZERO
+	player.currentBody.global_position = doorPos
 	var tween : Tween = get_tree().create_tween()
 	
 	tween.set_ease(Tween.EASE_OUT)
@@ -44,7 +44,7 @@ func swap_rooms(isReverse : bool, door : AnimatableBody3D, direction : Vector2):
 	fogTween = get_tree().create_tween()
 	fogTween.tween_property(lastCamPos.material, "density", 2.5, .75)
 	player.currentPlayerState = player.playerStates.NORMAL
-	player.set_collision_mask_value(3, true)
+	player.currentBody.set_collision_mask_value(3, true)
 	player.get_node("SpriteTest").no_depth_test = true
 	BasicClassFunctions.playerData.CurrentRoom = currentRoom
 	

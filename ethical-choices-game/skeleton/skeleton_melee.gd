@@ -12,6 +12,10 @@ extends CharacterBody3D
 var isVisible : bool = false
 const SPEED : float = 3.0
 
+var isControlled : bool = false
+
+var bodyType := "BasicEnemy"
+
 func _on_visible_on_screen_notifier_3d_screen_entered():
 	isVisible = true
 func _on_visible_on_screen_notifier_3d_screen_exited():
@@ -27,26 +31,28 @@ func _physics_process(delta):
 	if playerPos.distance_to(player.global_position) > .5:
 		playerPos = player.global_position
 		navAgent.target_position = playerPos
-	
-	if global_position.z > player.global_position.z:
-		$Sprite3D.render_priority = 3
-	else:
-		$Sprite3D.render_priority = 0
-	
-	if isVisible and currentRoom == BasicClassFunctions.playerData.CurrentRoom and player.currentPlayerState != player.playerStates.TRANSITION:
-		var direction := navAgent.get_next_path_position() - global_position
-		if isKnockback:
-			if currentKnockbackFrames >= knockbackFrames:
-				isKnockback = false
-				currentKnockbackFrames = 0
-			currentKnockbackFrames += 1
-			direction = global_position - player.global_position
-		direction = direction.normalized()
+	if !isControlled:
+		if global_position.z > player.global_position.z:
+			$Sprite3D.render_priority = 3
+		else:
+			$Sprite3D.render_priority = 0
 		
-		if direction:
-			velocity.x = direction.x * SPEED
-			velocity.z = direction.z * SPEED
-		move_and_slide()
+		if isVisible and currentRoom == BasicClassFunctions.playerData.CurrentRoom and player.currentPlayerState != player.playerStates.TRANSITION:
+			var direction := navAgent.get_next_path_position() - global_position
+			if isKnockback:
+				if currentKnockbackFrames >= knockbackFrames:
+					isKnockback = false
+					currentKnockbackFrames = 0
+				currentKnockbackFrames += 1
+				direction = global_position - player.global_position
+			direction = direction.normalized()
+			
+			if direction:
+				velocity.x = direction.x * SPEED
+				velocity.z = direction.z * SPEED
+			move_and_slide()
+	else:
+		$Sprite3D.render_priority = 2
 
 func takeDamage(damage : float):
 	isKnockback = true

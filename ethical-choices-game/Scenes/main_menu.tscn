@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://is7xlbfgobfc"]
+[gd_scene load_steps=4 format=3 uid="uid://is7xlbfgobfc"]
 
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_lp6dw"]
 [ext_resource type="Theme" uid="uid://c5fahnnlm81a7" path="res://Player/game_ui_theme.tres" id="1_pnph1"]
+[ext_resource type="AudioStream" uid="uid://dbaol717181cr" path="res://assets/Banks/ulysses/Assets/Ulysses.wav" id="3_yqh1a"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -79,6 +80,10 @@ size_flags_horizontal = 3
 theme = ExtResource("1_pnph1")
 theme_override_colors/font_color = Color(0.82596, 0, 0.232837, 1)
 text = "Quit"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_yqh1a")
+autoplay = true
 
 [connection signal="pressed" from="Buttons/NewGame" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Buttons/Load" to="." method="_on_load_pressed"]

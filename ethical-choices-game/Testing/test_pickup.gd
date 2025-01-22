@@ -13,8 +13,8 @@ var showingMsg : bool = false
 
 func mouse_hover():
 	mouseHover = true
-	print("mouse hovered ", global_position.distance_to(player.global_position))
-	if global_position.distance_to(player.global_position) < 2:
+	print("mouse hovered ", global_position.distance_to(player.currentBody.global_position))
+	if global_position.distance_to(player.currentBody.global_position) < 2:
 		BasicClassFunctions.spawnPrompt(str('Press "E" to pick up', visible_name), self)
 		showingMsg = true
 func mouse_unhover():
@@ -24,15 +24,15 @@ func mouse_unhover():
 	
 
 func _process(delta):
-	if global_position.distance_to(player.global_position) > 2 and mouseHover:
+	if global_position.distance_to(player.currentBody.global_position) > 2 and mouseHover and showingMsg:
 		BasicClassFunctions.removePrompt(self)
 		showingMsg = false
-	if global_position.distance_to(player.global_position) < 2 and mouseHover and !showingMsg:
+	if global_position.distance_to(player.currentBody.global_position) < 2 and mouseHover and !showingMsg:
 		BasicClassFunctions.spawnPrompt(str('Press "E" to pick up', visible_name), self)
 		showingMsg = true
 
 func _input(event):
-	if Input.is_action_just_pressed("interact") and mouseHover:
+	if Input.is_action_just_pressed("interact") and showingMsg:
 		BasicClassFunctions.playerData.CurrentItems.append(visible_name)
 		
 		BasicClassFunctions.removePrompt(self)

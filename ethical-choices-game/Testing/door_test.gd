@@ -34,7 +34,7 @@ func tweenSelf(opening : bool = false):
 		debounce = false
 	
 func _process(delta):
-	if collisionBox1.get_overlapping_bodies().find(player) > -1 or collisionBox2.get_overlapping_bodies().find(player) > -1:
+	if collisionBox1.get_overlapping_bodies().find(player.currentBody) > -1 or collisionBox2.get_overlapping_bodies().find(player.currentBody) > -1:
 		if !playerInBounds:
 			playerInBounds = true
 			BasicClassFunctions.spawnPrompt(message, self)
@@ -47,10 +47,10 @@ func _process(delta):
 func _input(event):
 	#print(collisionBox.get_overlapping_bodies().find(player))
 	if !debounce:
-		if Input.is_action_just_pressed("interact") and collisionBox2.get_overlapping_bodies().find(player) > -1:
+		if Input.is_action_just_pressed("interact") and collisionBox2.get_overlapping_bodies().find(player.currentBody) > -1:
 			
 			tweenSelf(true)
 			mainScene.call("swap_rooms", false, self, direction)
-		elif Input.is_action_just_pressed("interact") and collisionBox1.get_overlapping_bodies().find(player) > -1:
+		elif Input.is_action_just_pressed("interact") and collisionBox1.get_overlapping_bodies().find(player.currentBody) > -1:
 			tweenSelf(false)
 			mainScene.call("swap_rooms", true, self, direction)

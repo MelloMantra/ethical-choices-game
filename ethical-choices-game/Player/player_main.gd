@@ -15,7 +15,7 @@ var currentHealth : float = 100.0
 
 @onready var promptBox : Label = $GameUI/PromptPanel/HBoxContainer/Label
 @onready var promptPanel : PanelContainer = $GameUI/PromptPanel
-@onready var fader = $GameUI/Panel
+@onready var fader = $GameUI/Fader
 
 enum playerStates {
 	NORMAL,
@@ -66,11 +66,11 @@ func _physics_process(delta):
 	camDirection.basis.y = Vector3.UP
 	var direction = (camDirection.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction and currentPlayerState != playerStates.TRANSITION:
-		currentBody.velocity.x = min(abs(direction.x * SPEED), abs(velocity.x + direction.x * accel * delta)) * sign(direction.x)
-		currentBody.velocity.z = min(abs(direction.z * SPEED), abs(velocity.z + direction.z * accel * delta)) * sign(direction.z)
+		currentBody.velocity.x = min(abs(direction.x * currentBody.SPEED), abs(currentBody.velocity.x + direction.x * accel * delta)) * sign(direction.x)
+		currentBody.velocity.z = min(abs(direction.z * currentBody.SPEED), abs(currentBody.velocity.z + direction.z * accel * delta)) * sign(direction.z)
 	elif currentPlayerState != playerStates.TRANSITION:
-		currentBody.velocity.x = move_toward(velocity.x, 0, SPEED)
-		currentBody.velocity.z = move_toward(velocity.z, 0, SPEED)
+		currentBody.velocity.x = move_toward(currentBody.velocity.x, 0, SPEED)
+		currentBody.velocity.z = move_toward(currentBody.velocity.z, 0, SPEED)
 	if Input.is_action_pressed("sprint"):
 		currentBody.velocity *= Vector3(1.5,1,1.5)
 	
@@ -91,8 +91,8 @@ func _physics_process(delta):
 		else:
 			sprite.play("Idle")
 	elif currentPlayerState != playerStates.TRANSITION:
-		currentBody.velocity.x = move_toward(velocity.x, 0, SPEED)
-		currentBody.velocity.z = move_toward(velocity.z, 0, SPEED)
+		currentBody.velocity.x = move_toward(currentBody.velocity.x, 0, SPEED)
+		currentBody.velocity.z = move_toward(currentBody.velocity.z, 0, SPEED)
 		
 
 	currentBody.move_and_slide()
@@ -101,7 +101,7 @@ func _physics_process(delta):
 func _input(event):
 	
 	if Input.is_action_just_pressed("basic_attack") and currentPlayerState == playerStates.NORMAL:
-		swap_bodies()
+		
 		currentPlayerState = playerStates.ATTACKING
 		slash.play("slash")
 		for hit in attackArea.get_overlapping_bodies():
@@ -113,6 +113,8 @@ func _input(event):
 		var lookPoint : Vector3 = camera.project_position(event.position, zDepth)
 		lookPoint.y = attackArea.global_position.y
 		attackArea.look_at(lookPoint)
+	elif Input.is_action_just_pressed("swapBodies") and currentPlayerState == playerStates.NORMAL:
+		swap_bodies()
 
 func takeDamage(damage : float, pos : Vector3):
 	currentHealth -= damage
@@ -132,9 +134,18 @@ func takeDamage(damage : float, pos : Vector3):
 		BasicClassFunctions.load_data()
 
 func swap_bodies():
-	var tween : Tween = create_tween()
-	await tween.tween_property(fader["theme_override_styles/panel"], "bg_color", Color("000000"), .25).finished
-	tween.tween_property(fader["theme_override_styles/panel"], "bg_color", Color("00000000"), .25)
+	if BasicClassFunctions.findItemOfClass($CaptureCollider.get_overlapping_bodies(), "CharacterBody3D").index > -1:
+		var tween : Tween = create_tween()
+		await tween.tween_property(fader["theme_override_styles/panel"], "bg_color", Color("000000"), .25).finished
+		visible = false
+		global_position.y -= 10
+	
+		currentBody = BasicClassFunctions.findItemOfClass($CaptureCollider.get_overlapping_bodies(), "CharacterBody3D").child
+		
+		currentBody.isControlled = true
+		BasicClassFunctions.playerData.CurrentBodyType = currentBody.bodyType
+		tween = create_tween()
+		tween.tween_property(fader["theme_override_styles/panel"], "bg_color", Color("000000", 0), .25)
 
 
 func _on_attack_collider_body_entered(body):

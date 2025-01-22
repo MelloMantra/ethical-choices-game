@@ -9,12 +9,18 @@ var textDebounce : bool = false
 var currentObject
 var defaultPromptSize : int = 10
 
+const enemyTypeList = [
+	["BasicEnemy", "res://skeleton/skeleton_melee.tscn"]
+]
+
+
 var playerData = {
 	CurrentRoom = Vector2(0,0),
 	LastEnteredPos = Vector3(0,0,0),
 	CurrentHealth = 100,
 	CurrentItems = [],
-	CurrentAllianceAmount = 0
+	CurrentAllianceAmount = 0,
+	CurrentBodyType = "Player"
 }
 var scene_to_load : String = "res://Testing/test_world.tscn"
 var isNewGame : bool = false
@@ -133,6 +139,15 @@ func findItemOfName(searchName : String, list:Array):
 	for i in list.size():
 		
 		if list[i].is_class("Node") and list[i].name == searchName:
+			return {index = i, child = list[i]}
+	return {index = -1, child = null}
+
+func findItemOfClass(list:Array, className : String):
+	print(list)
+	
+	for i in list.size():
+		
+		if list[i].is_class(className):
 			return {index = i, child = list[i]}
 	return {index = -1, child = null}
 
