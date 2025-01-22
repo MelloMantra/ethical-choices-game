@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bx7eoaew86r2s"]
+[gd_scene load_steps=19 format=3 uid="uid://bx7eoaew86r2s"]
 
 [ext_resource type="Script" path="res://Testing/main_world_script.gd" id="1_8xlbb"]
 [ext_resource type="Texture2D" uid="uid://bp57ssspdivoy" path="res://icon.svg" id="1_abyuu"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ckj2njnfo5pao" path="res://Testing/locked_door_test.tscn" id="5_uhp4p"]
 [ext_resource type="PackedScene" uid="uid://jeu4t7fd0v5" path="res://Testing/test_pickup.tscn" id="6_0u3d5"]
 [ext_resource type="PackedScene" uid="uid://bkmcqoxxa01l3" path="res://skeleton/skeleton_melee.tscn" id="7_l2w3r"]
+[ext_resource type="PackedScene" uid="uid://dt2as1l8rpn23" path="res://skeleton/skellybones.tscn" id="8_fxbu0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lfcqd"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -331,3 +332,7 @@ monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MousePositioner"]
 shape = SubResource("BoxShape3D_u6gke")
+
+[node name="skellybones" parent="." instance=ExtResource("8_fxbu0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -17.7938)
+currentRoom = Vector2(0, 1)
