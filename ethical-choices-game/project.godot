@@ -111,4 +111,5 @@ swapBodies={
 
 textures/canvas_textures/default_texture_filter=3
 textures/default_filters/use_nearest_mipmap_filter=true
+textures/default_filters/texture_mipmap_bias=-2.0
 textures/decals/filter=2
