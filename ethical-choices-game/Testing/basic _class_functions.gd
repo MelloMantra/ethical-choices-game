@@ -3,18 +3,26 @@
 extends Node
 class_name NodeFunctions
 
+signal setPlayerBody
 
 var stopText : bool = false
 var textDebounce : bool = false
 var currentObject
 var defaultPromptSize : int = 10
 
+const enemyTypeList = [
+	["BasicEnemy", "res://skeleton/skeleton_melee.tscn"]
+]
+
+
 var playerData = {
 	CurrentRoom = Vector2(0,0),
 	LastEnteredPos = Vector3(0,0,0),
 	CurrentHealth = 100,
 	CurrentItems = [],
-	CurrentAllianceAmount = 0
+	CurrentAllianceAmount = 0,
+	CurrentBodyType = "Player",
+	CurrentBodyNodePath = ""
 }
 var scene_to_load : String = "res://Testing/test_world.tscn"
 var isNewGame : bool = false
@@ -24,7 +32,9 @@ func newGame():
 		LastEnteredPos = Vector3(0,0,0),
 		CurrentHealth = 100,
 		CurrentItems = [],
-		CurrentAllianceAmount = 0
+		CurrentAllianceAmount = 0,
+		CurrentBodyType = "Player",
+		CurrentBodyNodePath = ""
 	}
 	isNewGame = true
 	load_data()
@@ -68,12 +78,22 @@ func _check_scene_contents():
 	if loadDict:
 		var mainScene : Node3D = findChildOfClass(get_tree().get_root(), "Node3D").child
 		var childArray : Array = mainScene.get_children()
-		print(loadDict.currentLoadedChildren)
+		#print(loadDict.currentLoadedChildren)
 		for index in childArray.size():
-			print(childArray[index])
+			#print(childArray[index])
 			if loadDict.currentLoadedChildren.find(childArray[index].name) < 0:
 				
 				childArray[index].queue_free()
+		if loadDict.pData.CurrentBodyType != "Player":
+			for list in enemyTypeList:
+				if list[0] == loadDict.pData.CurrentBodyType:
+					var player = findItemOfName("Player", childArray).child
+					player.currentBody = mainScene.get_node(loadDict.pData.CurrentBodyNodePath)
+					print(player.currentBody)
+					
+					setPlayerBody.emit()
+					
+					
 		
 
 func dispText(text : String, label : Label, panel : PanelContainer):
@@ -133,6 +153,15 @@ func findItemOfName(searchName : String, list:Array):
 	for i in list.size():
 		
 		if list[i].is_class("Node") and list[i].name == searchName:
+			return {index = i, child = list[i]}
+	return {index = -1, child = null}
+
+func findItemOfClass(list:Array, className : String):
+	print(list)
+	
+	for i in list.size():
+		
+		if list[i].is_class(className):
 			return {index = i, child = list[i]}
 	return {index = -1, child = null}
 

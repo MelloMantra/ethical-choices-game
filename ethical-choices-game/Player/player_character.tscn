@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://d0wat0xqmswwr"]
+[gd_scene load_steps=46 format=3 uid="uid://d0wat0xqmswwr"]
 
 [ext_resource type="Script" path="res://Player/player_main.gd" id="1_xbnyu"]
 [ext_resource type="PackedScene" uid="uid://cjy0n02hdcrxe" path="res://Player/game_ui.tscn" id="2_r7cew"]
@@ -297,6 +297,10 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_iudyg"]
+height = 1.8
+radius = 2.5
+
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 14
 input_ray_pickable = false
@@ -354,6 +358,14 @@ frame_progress = 1.0
 
 [node name="PauseMenu" parent="." instance=ExtResource("4_yc51g")]
 visible = false
+
+[node name="CaptureCollider" type="Area3D" parent="."]
+collision_mask = 8
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CaptureCollider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CylinderShape3D_iudyg")
 
 [connection signal="body_entered" from="AttackCollider" to="." method="_on_attack_collider_body_entered"]
 
