@@ -3,6 +3,7 @@
 extends Node
 class_name NodeFunctions
 
+signal setPlayerBody
 
 var stopText : bool = false
 var textDebounce : bool = false
@@ -20,7 +21,8 @@ var playerData = {
 	CurrentHealth = 100,
 	CurrentItems = [],
 	CurrentAllianceAmount = 0,
-	CurrentBodyType = "Player"
+	CurrentBodyType = "Player",
+	CurrentBodyNodePath = ""
 }
 var scene_to_load : String = "res://Testing/test_world.tscn"
 var isNewGame : bool = false
@@ -30,7 +32,9 @@ func newGame():
 		LastEnteredPos = Vector3(0,0,0),
 		CurrentHealth = 100,
 		CurrentItems = [],
-		CurrentAllianceAmount = 0
+		CurrentAllianceAmount = 0,
+		CurrentBodyType = "Player",
+		CurrentBodyNodePath = ""
 	}
 	isNewGame = true
 	load_data()
@@ -74,12 +78,22 @@ func _check_scene_contents():
 	if loadDict:
 		var mainScene : Node3D = findChildOfClass(get_tree().get_root(), "Node3D").child
 		var childArray : Array = mainScene.get_children()
-		print(loadDict.currentLoadedChildren)
+		#print(loadDict.currentLoadedChildren)
 		for index in childArray.size():
-			print(childArray[index])
+			#print(childArray[index])
 			if loadDict.currentLoadedChildren.find(childArray[index].name) < 0:
 				
 				childArray[index].queue_free()
+		if loadDict.pData.CurrentBodyType != "Player":
+			for list in enemyTypeList:
+				if list[0] == loadDict.pData.CurrentBodyType:
+					var player = findItemOfName("Player", childArray).child
+					player.currentBody = mainScene.get_node(loadDict.pData.CurrentBodyNodePath)
+					print(player.currentBody)
+					
+					setPlayerBody.emit()
+					
+					
 		
 
 func dispText(text : String, label : Label, panel : PanelContainer):

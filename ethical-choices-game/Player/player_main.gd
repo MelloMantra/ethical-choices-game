@@ -6,7 +6,9 @@ const accel = 8 #accel amount / sec
 
 var currentHealth : float = 100.0
 
-@onready var currentBody : CharacterBody3D = self
+var currentBody : CharacterBody3D
+
+@onready var mainScene : Node3D = BasicClassFunctions.findChildOfClass(get_tree().get_root(), "Node3D").child
 
 @onready var camera = $Camera3D
 @onready var sprite : AnimatedSprite3D = $SpriteTest
@@ -34,8 +36,18 @@ func _ready():
 	sprite.play("Idle")
 	currentHealth = BasicClassFunctions.playerData.CurrentHealth
 	$GameUI/Health.value = currentHealth
-	global_position = BasicClassFunctions.playerData.LastEnteredPos
-	BasicClassFunctions.save_data()
+	
+	
+	
+	currentBody = self
+	await BasicClassFunctions.setPlayerBody
+	print(currentBody)
+	currentBody.global_position = BasicClassFunctions.playerData.LastEnteredPos + Vector3(0, currentBody.get_node("CollisionShape3D").shape.height/2, 0)
+	if currentBody != self:
+		currentBody.isControlled = true
+		global_position.y -= 10
+		visible = false
+	
 
 var zDepth
 
@@ -105,7 +117,7 @@ func _input(event):
 		currentPlayerState = playerStates.ATTACKING
 		slash.play("slash")
 		for hit in attackArea.get_overlapping_bodies():
-			if hit.has_method("takeDamage"):
+			if hit.has_method("takeDamage") and hit != currentBody:
 				hit.call("takeDamage", 15)
 		await slash.animation_finished
 		currentPlayerState = playerStates.NORMAL
@@ -144,6 +156,8 @@ func swap_bodies():
 		
 		currentBody.isControlled = true
 		BasicClassFunctions.playerData.CurrentBodyType = currentBody.bodyType
+		BasicClassFunctions.playerData.CurrentBodyNodePath = mainScene.get_path_to(currentBody)
+		print(BasicClassFunctions.playerData.CurrentBodyNodePath)
 		tween = create_tween()
 		tween.tween_property(fader["theme_override_styles/panel"], "bg_color", Color("000000", 0), .25)
 

@@ -32,7 +32,7 @@ func tweenSelf(opening : bool = false):
 		tween.tween_property(self, "global_rotation:y", startRotation - PI/2, .75)
 	
 func _process(delta):
-	if collisionBox1.get_overlapping_bodies().find(player) > -1 or collisionBox2.get_overlapping_bodies().find(player) > -1:
+	if collisionBox1.get_overlapping_bodies().find(player.currentBody) > -1 or collisionBox2.get_overlapping_bodies().find(player.currentBody) > -1:
 		if !playerInBounds:
 			playerInBounds = true
 			if isLocked:
@@ -47,15 +47,15 @@ func _process(delta):
 
 func _input(event):
 	if !isLocked:
-		if Input.is_action_just_pressed("interact") and collisionBox2.get_overlapping_bodies().find(player) > -1:
+		if Input.is_action_just_pressed("interact") and collisionBox2.get_overlapping_bodies().find(player.currentBody) > -1:
 			
 			tweenSelf(true)
 			mainScene.call("swap_rooms", false, self, direction)
-		elif Input.is_action_just_pressed("interact") and collisionBox1.get_overlapping_bodies().find(player) > -1:
+		elif Input.is_action_just_pressed("interact") and collisionBox1.get_overlapping_bodies().find(player.currentBody) > -1:
 			tweenSelf(false)
 			mainScene.call("swap_rooms", true, self, direction)
 	elif BasicClassFunctions.playerData.CurrentItems.find(keyUnlockName) > -1:#BasicClassFunctions.findItemOfName(keyUnlockName, BasicClassFunctions.playerData.CurrentItems).index > -1:
-		if Input.is_action_just_pressed("interact") and (collisionBox2.get_overlapping_bodies().find(player) > -1 or collisionBox1.get_overlapping_bodies().find(player) > -1): 
+		if Input.is_action_just_pressed("interact") and (collisionBox2.get_overlapping_bodies().find(player.currentBody) > -1 or collisionBox1.get_overlapping_bodies().find(player.currentBody) > -1): 
 			isLocked = false
 			BasicClassFunctions.removePrompt(self)
 			await get_tree().create_timer(.1).timeout

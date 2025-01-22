@@ -62,5 +62,6 @@ func takeDamage(damage : float):
 
 
 func _on_hit_area_body_entered(body):
-	if body == player:
+	
+	if body == player and self != player.currentBody:
 		player.takeDamage(10.0, global_position)
